@@ -26,17 +26,20 @@ SqlRunner.run(sql)
 
 
   def delete()
-
+sql = "DELETE * FROM tickets WHERE id = #{@id}"
   end
 
 
   def self.all()
-
+sql = "SELECT * FROM tickets;"
+tickets = Ticket.get_many(sql)
+return result
   end
 
 
   def self.delete_all()
-
+sql = "DELETE FROM tickets;"
+SqlRunner.run(sql)
   end
 
 
@@ -45,6 +48,20 @@ SqlRunner.run(sql)
     result = tickets.map { |ticket| Ticket.new( ticket ) }
     return result
   end
+
+
+def customers()
+sql = "SELECT * FROM customers WHERE id = #{@customer_id};"
+customer = SqlRunner.first(sql)
+return Customer.new( customer )
+end
+
+
+def films()
+sql = "SELECT * FROM films WHERE id = #{@film_id};"
+film = SqlRunner.first(sql)
+return Film.new( film )
+end
 
 
 

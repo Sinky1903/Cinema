@@ -20,32 +20,40 @@ class Customer
 
 
   def update()
-    sql = "UPDATE customers SET (name, funds) = ('#{ @name }', #{ @funds }) WHERE id = #{ @id };"
+    sql = "UPDATE customers SET (name, funds) = ('#{ @name }', #{ @funds }) WHERE id = #{ @id }"
     SqlRunner.run(sql)
   end
 
 
   def delete()
-
+    sql = "DELETE * FROM customers WHERE id = #{@id}"
   end
 
 
   def self.all()
-
+    sql = "SELECT * FROM customers"
+    customers = Customer.get_many(sql)
+    return result
   end
 
 
   def self.delete_all()
-
+sql = "DELETE FROM customers"
+SqlRunner.run(sql)
   end
 
 
-  def self.get_many()
+  def self.get_many(sql)
     customers = SqlRunner.run(sql)
     result = customers.map { |customer| Customer.new( customer ) }
     return result
   end
 
+
+def films()
+sql = "SELECT films.* from films INNER JOIN customers ON tickets.film_id = films.id WHERE tickets.film_id = #{@id};"
+return Film.get_many(sql)
+end
 
 
 end
